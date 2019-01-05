@@ -7,7 +7,9 @@ public class ReinforcementRadio : MonoBehaviour
 {
 
     public int desiredCloneCount = 3;
+    public string spawnTag = "clone";
     public GameObject clonePrefab;
+    public SpawnPoints spawnPoints;
 
     // Update is called once per frame
     void Update()
@@ -21,7 +23,11 @@ public class ReinforcementRadio : MonoBehaviour
 
     private void RefillClones(int cloneCount)
     {
-        Instantiate(clonePrefab, transform);
+        for (int i=0; i < desiredCloneCount - cloneCount ; i++)
+        {
+            Instantiate(clonePrefab, spawnPoints.nextTransform().position, new Quaternion());
+        }
+        
     }
 
     private bool RequireMoreClones(int cloneCount)
@@ -31,6 +37,6 @@ public class ReinforcementRadio : MonoBehaviour
 
     private int CountClones()
     {
-        return GameObject.FindGameObjectsWithTag("clone").Length;
+        return GameObject.FindGameObjectsWithTag(spawnTag).Length;
     }
 }
