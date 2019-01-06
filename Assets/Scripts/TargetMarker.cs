@@ -11,23 +11,21 @@ public class TargetMarker : MonoBehaviour
     public delegate void OnTargetAquired(GameObject target, int cloneCount);
     public static event OnTargetAquired TargetAquired;
 
-    private float timeDown = 0;
     private bool pointerdown = false;
-
-    void Update()
-    {
-        if (pointerdown)
-        {
-            timeDown += Time.deltaTime;
-        }
-    }
 
     public void OnMouseDown()
     {
         pointerdown = true;
     }
-
     public void OnMouseUp()
+    {
+        if (pointerdown)
+        {
+            Reset();
+        }
+    }
+
+    public void OnMouseUpAsButton()
     {
         if (pointerdown)
         {
@@ -39,21 +37,11 @@ public class TargetMarker : MonoBehaviour
     private void Reset()
     {
         pointerdown = false;
-        timeDown = 0;
-    }
-
-    private int CountClones()
-    {
-        return (int) Mathf.Floor(timeDown);
     }
 
     private void SendClonesToMe()
     {
-        int clones = CountClones();
-        if (clones > 0)
-        {
-            Debug.Log("Sending " + clones + " to attack me");
-            TargetAquired(gameObject, clones);
-        }
+        Debug.Log("Sending one clone to attack me");
+        TargetAquired(gameObject, 1);
     }
 }
