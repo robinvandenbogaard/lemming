@@ -10,9 +10,18 @@ public class ReinforcementRadio : MonoBehaviour
     public string spawnTag = "clone";
     public GameObject clonePrefab;
     public SpawnPoints spawnPoints;
+    public bool autoSummon = false;
 
     // Update is called once per frame
     void Update()
+    {
+        if (autoSummon)
+        {
+            SummonReinforcements();
+        }
+    }
+
+    public void SummonReinforcements()
     {
         int cloneCount = CountClones();
         if (RequireMoreClones(cloneCount))
@@ -20,6 +29,7 @@ public class ReinforcementRadio : MonoBehaviour
             RefillClones(cloneCount);
         }
     }
+
 
     private void RefillClones(int cloneCount)
     {
