@@ -33,7 +33,9 @@ public class ReinforcementRadio : MonoBehaviour
 
     private void RefillClones(int cloneCount)
     {
-        for (int i=0; i < desiredCloneCount - cloneCount ; i++)
+        int clonesToSummon = desiredCloneCount - cloneCount;
+
+        for (int i=0; i < clonesToSummon ; i++)
         {
             Instantiate(clonePrefab, spawnPoints.nextTransform().position, new Quaternion());
         }
